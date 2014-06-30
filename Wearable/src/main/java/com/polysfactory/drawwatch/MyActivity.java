@@ -8,7 +8,7 @@ import android.widget.ImageView;
 
 public class MyActivity extends Activity {
 
-    public static final int REQUEST_CODE_COLOR_SET = 101;
+    public static final int REQUEST_CODE_SETTING = 101;
     private ImageView prefButton;
     private DrawingView drawingVeiw;
 
@@ -28,15 +28,17 @@ public class MyActivity extends Activity {
 
     private void showColorPicker() {
         Intent intent = new Intent(this, SettingActivity.class);
-        startActivityForResult(intent, REQUEST_CODE_COLOR_SET);
+        startActivityForResult(intent, REQUEST_CODE_SETTING);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_CODE_COLOR_SET) {
+        if (requestCode == REQUEST_CODE_SETTING) {
             if (resultCode == SettingActivity.RESULT_CODE_COLOR_SET) {
                 int color = data.getIntExtra(SettingActivity.KEY_COLOR, 0);
                 drawingVeiw.setPaintColor(color);
+            } else if (resultCode == SettingActivity.RESULT_CODE_SHARE) {
+                // TODO share image
             }
         }
         super.onActivityResult(requestCode, resultCode, data);

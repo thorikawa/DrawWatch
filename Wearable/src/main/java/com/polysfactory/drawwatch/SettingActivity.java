@@ -6,14 +6,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 public class SettingActivity extends Activity {
 
     public static final String KEY_COLOR = "color";
     public static final int RESULT_CODE_COLOR_SET = 100;
+    public static final int RESULT_CODE_SHARE = 101;
     private ImageView closeButton;
     private ColorPicker colorPicker;
     private ViewPager viewPager;
@@ -37,9 +40,11 @@ public class SettingActivity extends Activity {
     class SettingViewPagerAdapter extends PagerAdapter {
 
         private Context context;
+        private LayoutInflater inflater;
 
         public SettingViewPagerAdapter(Context context) {
             this.context = context;
+            this.inflater = LayoutInflater.from(context);
         }
 
         @Override
@@ -47,8 +52,10 @@ public class SettingActivity extends Activity {
             View view = null;
             if (position == 0) {
                 view = buildColorPicker();
-                container.addView(view);
+            } else if (position == 1) {
+                view = buildShareView();
             }
+            container.addView(view);
             return view;
         }
 
@@ -59,7 +66,7 @@ public class SettingActivity extends Activity {
 
         @Override
         public int getCount() {
-            return 1;
+            return 2;
         }
 
         @Override
@@ -67,7 +74,7 @@ public class SettingActivity extends Activity {
             return view == object;
         }
 
-        View buildColorPicker() {
+        private View buildColorPicker() {
             ColorPicker colorPicker = new ColorPicker(context);
             colorPicker.setOnColorPickedListener(new ColorPicker.OnColorPickedListener() {
                 @Override
@@ -79,6 +86,21 @@ public class SettingActivity extends Activity {
                 }
             });
             return colorPicker;
+        }
+
+        private View buildShareView() {
+            View view = inflater.inflate(R.layout.action_button, null);
+            TextView title = (TextView) view.findViewById(R.id.action_title);
+            title.setText(getString(R.string.share));
+            ImageView button = (ImageView) view.findViewById(R.id.action_image);
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    setResult(RESULT_CODE_SHARE, null);
+                    finish();
+                }
+            });
+            return view;
         }
     }
 
