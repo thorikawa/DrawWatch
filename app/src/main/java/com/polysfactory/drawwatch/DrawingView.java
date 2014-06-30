@@ -16,11 +16,15 @@ public class DrawingView extends SurfaceView {
     Paint paint;
     float prevX = -1f;
     float prevY = -1f;
+    private Bitmap bitmap;
     SurfaceHolder.Callback callback = new SurfaceHolder.Callback() {
 
         @Override
         public void surfaceCreated(SurfaceHolder surfaceHolder) {
             initOffScreenBuffer();
+            Canvas canvas = surfaceHolder.lockCanvas();
+            canvas.drawBitmap(bitmap, 0, 0, paint);
+            surfaceHolder.unlockCanvasAndPost(canvas);
         }
 
         @Override
@@ -31,7 +35,6 @@ public class DrawingView extends SurfaceView {
         public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
         }
     };
-    private Bitmap bitmap;
     private Canvas offScreen;
 
     public DrawingView(Context context) {
