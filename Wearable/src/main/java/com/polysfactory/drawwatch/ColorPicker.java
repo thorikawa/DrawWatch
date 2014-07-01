@@ -12,7 +12,7 @@ import android.view.View;
 
 public class ColorPicker extends View {
 
-    private static final int COLORS[] = new int[]{Color.BLACK, Color.GRAY, Color.BLUE, Color.RED, Color.GREEN, Color.MAGENTA, Color.MAGENTA, Color.CYAN, Color.YELLOW};
+    private static final int COLORS[] = new int[]{Color.BLACK, Color.GRAY, Color.BLUE, Color.RED, Color.GREEN, Color.rgb(239, 208, 207), Color.MAGENTA, Color.CYAN, Color.YELLOW};
     private static final int COLUMN = 3;
     private static final int ROW = (COLORS.length / COLUMN) + (COLORS.length % COLUMN > 0 ? 1 : 0);
     private Paint paint = new Paint();
