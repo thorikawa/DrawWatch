@@ -5,4 +5,5 @@ package com.polysfactory.drawwatch;
  */
 public class Constants {
     public static final String TAG = "WearDraw";
+    public static final String MESSAGE_PATH = "/com.polysfactory.drawwatch/image";
 }

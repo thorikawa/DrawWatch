@@ -89,4 +89,8 @@ public class DrawingView extends SurfaceView {
     public void setPaintColor(int color) {
         paint.setColor(color);
     }
+
+    public Bitmap getBitmap() {
+        return bitmap;
+    }
 }

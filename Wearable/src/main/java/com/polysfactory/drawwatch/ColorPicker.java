@@ -47,7 +47,6 @@ public class ColorPicker extends View {
                 int col = (int) (x / cellWidth);
                 int row = (int) (y / cellHeight);
                 int index = row * COLUMN + col;
-                Log.d(Constants.TAG, "picker.onSingleTapConfirm");
                 if (index >= COLORS.length) {
                     Log.e(Constants.TAG, "color index is out of range");
                 } else {
@@ -93,7 +92,6 @@ public class ColorPicker extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        Log.d(Constants.TAG, "picker.onTouchEvent");
         gestureDetector.onTouchEvent(event);
         return true;
     }
