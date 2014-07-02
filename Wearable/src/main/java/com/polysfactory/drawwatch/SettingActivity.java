@@ -3,7 +3,9 @@ package com.polysfactory.drawwatch;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -17,9 +19,12 @@ public class SettingActivity extends Activity {
     public static final String KEY_COLOR = "color";
     public static final int RESULT_CODE_COLOR_SET = 100;
     public static final int RESULT_CODE_SHARE = 101;
+    public static final int RESULT_CODE_RETRY = 102;
+    public static final int RESULT_CODE_CLOSE = 103;
     private ImageView closeButton;
     private ColorPicker colorPicker;
     private ViewPager viewPager;
+    private Handler handler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +59,10 @@ public class SettingActivity extends Activity {
                 view = buildColorPicker();
             } else if (position == 1) {
                 view = buildShareView();
+            } else if (position == 2) {
+                view = buildRetryView();
+            } else if (position == 3) {
+                view = buildCloseView();
             }
             container.addView(view);
             return view;
@@ -66,7 +75,7 @@ public class SettingActivity extends Activity {
 
         @Override
         public int getCount() {
-            return 2;
+            return 4;
         }
 
         @Override
@@ -92,11 +101,44 @@ public class SettingActivity extends Activity {
             View view = inflater.inflate(R.layout.action_button, null);
             TextView title = (TextView) view.findViewById(R.id.action_title);
             title.setText(getString(R.string.share));
-            ImageView button = (ImageView) view.findViewById(R.id.action_image);
+            final ImageView button = (ImageView) view.findViewById(R.id.action_image);
+            button.setImageResource(R.drawable.ic_full_openonphone);
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     setResult(RESULT_CODE_SHARE, null);
+                    finish();
+                }
+            });
+            return view;
+        }
+
+        private View buildRetryView() {
+            View view = inflater.inflate(R.layout.action_button, null);
+            TextView title = (TextView) view.findViewById(R.id.action_title);
+            title.setText(getString(R.string.startOver));
+            final ImageView button = (ImageView) view.findViewById(R.id.action_image);
+            button.setImageResource(R.drawable.ic_full_retry);
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    setResult(RESULT_CODE_RETRY, null);
+                    finish();
+                }
+            });
+            return view;
+        }
+
+        private View buildCloseView() {
+            View view = inflater.inflate(R.layout.action_button, null);
+            TextView title = (TextView) view.findViewById(R.id.action_title);
+            title.setText(getString(R.string.closeApp));
+            final ImageView button = (ImageView) view.findViewById(R.id.action_image);
+            button.setImageResource(R.drawable.ic_full_cancel);
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    setResult(RESULT_CODE_CLOSE, null);
                     finish();
                 }
             });

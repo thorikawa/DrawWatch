@@ -17,10 +17,12 @@
 
         <ImageView
             android:id="@+id/action_image"
-            android:layout_height="104dp"
-            android:layout_width="104dp"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
             android:layout_gravity="center"
-            android:src="@drawable/generic_confirmation_00173">
+            android:src="@drawable/ic_full_reply"
+            android:scaleType="center"
+            android:background="@drawable/action_button">
 
         </ImageView>
 

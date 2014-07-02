@@ -16,15 +16,12 @@ public class DrawingView extends SurfaceView {
     Paint paint;
     float prevX = -1f;
     float prevY = -1f;
-    private Bitmap bitmap;
     SurfaceHolder.Callback callback = new SurfaceHolder.Callback() {
 
         @Override
         public void surfaceCreated(SurfaceHolder surfaceHolder) {
             initOffScreenBuffer();
-            Canvas canvas = surfaceHolder.lockCanvas();
-            canvas.drawBitmap(bitmap, 0, 0, paint);
-            surfaceHolder.unlockCanvasAndPost(canvas);
+            flushBuffer();
         }
 
         @Override
@@ -35,6 +32,7 @@ public class DrawingView extends SurfaceView {
         public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
         }
     };
+    private Bitmap bitmap;
     private Canvas offScreen;
 
     public DrawingView(Context context) {
@@ -74,10 +72,8 @@ public class DrawingView extends SurfaceView {
             float y = event.getY();
             int action = event.getAction();
             if (prevX >= 0f && prevY >= 0f && action != MotionEvent.ACTION_DOWN) {
-                Canvas canvas = holder.lockCanvas();
                 offScreen.drawLine(prevX, prevY, x, y, paint);
-                canvas.drawBitmap(bitmap, 0, 0, paint);
-                holder.unlockCanvasAndPost(canvas);
+                flushBuffer();
             }
             prevX = x;
             prevY = y;
@@ -92,5 +88,16 @@ public class DrawingView extends SurfaceView {
 
     public Bitmap getBitmap() {
         return bitmap;
+    }
+
+    public void reset() {
+        offScreen.drawColor(Color.WHITE);
+        flushBuffer();
+    }
+
+    public void flushBuffer() {
+        Canvas canvas = holder.lockCanvas();
+        canvas.drawBitmap(bitmap, 0, 0, paint);
+        holder.unlockCanvasAndPost(canvas);
     }
 }

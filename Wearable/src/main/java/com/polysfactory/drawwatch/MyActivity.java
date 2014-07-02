@@ -73,6 +73,10 @@ public class MyActivity extends Activity implements GoogleApiClient.ConnectionCa
                 drawingVeiw.setPaintColor(color);
             } else if (resultCode == SettingActivity.RESULT_CODE_SHARE) {
                 shareBitmapAsync();
+            } else if (resultCode == SettingActivity.RESULT_CODE_RETRY) {
+                drawingVeiw.reset();
+            } else if (resultCode == SettingActivity.RESULT_CODE_CLOSE) {
+                finish();
             }
         }
         super.onActivityResult(requestCode, resultCode, data);

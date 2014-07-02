@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="cw_black">#ff000000</color>
+    <color name="cw_blue">#ff2878ff</color>
+    <color name="cw_dark_blue">#ff2955c5</color>
+    <color name="cw_green">#ff32cd32</color>
+    <color name="cw_grey">#ff777777</color>
+    <color name="cw_red">#ffff5252</color>
+    <color name="cw_white">#ffffffff</color>
+    <color name="cw_orange">#ffff6d3f</color>
+</resources>
