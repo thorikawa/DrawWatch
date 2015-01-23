@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.wearable.view.WatchViewStub;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,16 +31,21 @@ public class SettingActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
-        viewPager = (ViewPager) findViewById(R.id.viewPager);
-        viewPager.setAdapter(new SettingViewPagerAdapter(this));
-        closeButton = (ImageView) findViewById(R.id.closeButton);
-        closeButton.setOnClickListener(new View.OnClickListener() {
+        final WatchViewStub stub = (WatchViewStub) findViewById(R.id.watch_view_stub);
+        stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener() {
             @Override
-            public void onClick(View view) {
-                finish();
+            public void onLayoutInflated(WatchViewStub stub) {
+                viewPager = (ViewPager) findViewById(R.id.viewPager);
+                viewPager.setAdapter(new SettingViewPagerAdapter(SettingActivity.this));
+                closeButton = (ImageView) findViewById(R.id.closeButton);
+                closeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        finish();
+                    }
+                });
             }
         });
-
     }
 
     class SettingViewPagerAdapter extends PagerAdapter {
